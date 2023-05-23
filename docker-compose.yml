@@ -4,25 +4,25 @@ services:
     ports:
       - 8080:80
       - 4443:443
-    image: desid/e-kas
+    image: desid/web-ekas
     networks: 
-      - e-kas
+      - ekas
     deploy:
-      replicas: 4
+      replicas: 2
       placement:
         constraints: [node.role == worker]
 
   db:
     ports:
       - 3306:3306
-    image: desid/ekas
+    image: desid/db-ekas
     environment:
-      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ROOT_PASSWORD: "12345"
       MYSQL_DATABASE: "ekas"
     networks: 
       - ekas
     deploy:
-      replicas: 2
+      replicas: 1
       placement:
         constraints: [node.role == worker]
 
@@ -44,7 +44,7 @@ services:
         constraints: [node.role == manager]
       
 networks:
-  nisan:
+  ekas:
     driver: overlay
 
 configs:
